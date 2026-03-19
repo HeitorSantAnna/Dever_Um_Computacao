@@ -1,0 +1,56 @@
+{
+    "name": "Controlers",
+    "maps": [
+        {
+            "name": "Create",
+            "id": "5188e4be-fcad-4dee-9043-e359da8c3baf",
+            "actions": [
+                {
+                    "name": "Pintura",
+                    "type": "Value",
+                    "id": "aeeb645e-8054-4073-b699-1edfa41fb49b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Pintar",
+                    "id": "55dd7d68-2e43-40b7-9eb1-675d065119ca",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pintura",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "d203e0b6-1e62-442a-9276-71e16cab2fa8",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pintura",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "a412d83d-a5d9-4dbb-a7dd-b5e48d3b5d16",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pintura",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
