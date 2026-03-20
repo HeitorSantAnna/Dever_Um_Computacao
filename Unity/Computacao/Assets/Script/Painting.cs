@@ -1,6 +1,9 @@
 using System;
+using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class Painting : MonoBehaviour
 {
@@ -12,7 +15,9 @@ public class Painting : MonoBehaviour
 
     public static int scaletexx, scaletexy;
 
-    public static Color colorPaint;
+    public static Color colorPaint; 
+
+    private string name = $"textureMap_.ppm";
 
     void Start()
     {
@@ -89,5 +94,38 @@ public class Painting : MonoBehaviour
 
             tex.Apply(false);
         }
+    }
+
+    public void ExportPPM()
+    {
+        string caminho = Application.dataPath + "/" + name;
+
+        int width = tex.width;
+        int height = tex.height;
+
+        Color[] colors = tex.GetPixels();
+
+        string header = $"P3\n{width} {height}\n255\n";
+
+        using (StreamWriter writer = new StreamWriter(caminho))
+        {
+            writer.Write(header);
+            
+            for(int y = height - 1; y >= 0; y--)
+            {
+                for(int x = 0; x < width; x++)
+                {
+                    Color c = tex.GetPixel(x, y);
+
+                    int r = Mathf.RoundToInt(c.r * 255);
+                    int g = Mathf.RoundToInt(c.g * 255);
+                    int b = Mathf.RoundToInt(c.b * 255);
+
+                    writer.WriteLine($"{r} {g} {b}");
+                }
+            }
+        }
+
+        Debug.Log($"Arquivo salvo em: {caminho}");
     }
 }

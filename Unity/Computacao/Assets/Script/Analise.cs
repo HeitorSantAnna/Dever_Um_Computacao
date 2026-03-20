@@ -34,7 +34,7 @@ public class Analise : MonoBehaviour
             for(int j = 0; j < texture.height - 1; j++)
             {
                 cor1 = texture.GetPixel(i, j);
-                cor2 = texture.GetPixel(i + 1, j + 1);
+                cor2 = texture.GetPixel(i + 1, j);
 
                 if (cor1 != cor2)
                 {

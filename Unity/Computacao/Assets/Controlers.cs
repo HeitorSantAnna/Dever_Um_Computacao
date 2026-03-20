@@ -178,34 +178,6 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
-        },
-        {
-            ""name"": ""Teste"",
-            ""id"": ""a9a3ed05-297f-47b2-a4c7-65cd03ed1fdc"",
-            ""actions"": [
-                {
-                    ""name"": ""New action"",
-                    ""type"": ""Button"",
-                    ""id"": ""5c69c9f8-d472-4632-8da4-4957e2645ab3"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""40ee608a-af5e-4593-905a-446813b994e9"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""New action"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": []
@@ -214,15 +186,11 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
         m_Create = asset.FindActionMap("Create", throwIfNotFound: true);
         m_Create_Pintura = m_Create.FindAction("Pintura", throwIfNotFound: true);
         m_Create_Vanish = m_Create.FindAction("Vanish", throwIfNotFound: true);
-        // Teste
-        m_Teste = asset.FindActionMap("Teste", throwIfNotFound: true);
-        m_Teste_Newaction = m_Teste.FindAction("New action", throwIfNotFound: true);
     }
 
     ~@Controlers()
     {
         UnityEngine.Debug.Assert(!m_Create.enabled, "This will cause a leak and performance issues, Controlers.Create.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_Teste.enabled, "This will cause a leak and performance issues, Controlers.Teste.Disable() has not been called.");
     }
 
     /// <summary>
@@ -401,102 +369,6 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="CreateActions" /> instance referencing this action map.
     /// </summary>
     public CreateActions @Create => new CreateActions(this);
-
-    // Teste
-    private readonly InputActionMap m_Teste;
-    private List<ITesteActions> m_TesteActionsCallbackInterfaces = new List<ITesteActions>();
-    private readonly InputAction m_Teste_Newaction;
-    /// <summary>
-    /// Provides access to input actions defined in input action map "Teste".
-    /// </summary>
-    public struct TesteActions
-    {
-        private @Controlers m_Wrapper;
-
-        /// <summary>
-        /// Construct a new instance of the input action map wrapper class.
-        /// </summary>
-        public TesteActions(@Controlers wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "Teste/Newaction".
-        /// </summary>
-        public InputAction @Newaction => m_Wrapper.m_Teste_Newaction;
-        /// <summary>
-        /// Provides access to the underlying input action map instance.
-        /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Teste; }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
-        public void Enable() { Get().Enable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
-        public void Disable() { Get().Disable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
-        public bool enabled => Get().enabled;
-        /// <summary>
-        /// Implicitly converts an <see ref="TesteActions" /> to an <see ref="InputActionMap" /> instance.
-        /// </summary>
-        public static implicit operator InputActionMap(TesteActions set) { return set.Get(); }
-        /// <summary>
-        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <param name="instance">Callback instance.</param>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
-        /// </remarks>
-        /// <seealso cref="TesteActions" />
-        public void AddCallbacks(ITesteActions instance)
-        {
-            if (instance == null || m_Wrapper.m_TesteActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_TesteActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
-        }
-
-        /// <summary>
-        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <remarks>
-        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
-        /// </remarks>
-        /// <seealso cref="TesteActions" />
-        private void UnregisterCallbacks(ITesteActions instance)
-        {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
-        }
-
-        /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="TesteActions.UnregisterCallbacks(ITesteActions)" />.
-        /// </summary>
-        /// <seealso cref="TesteActions.UnregisterCallbacks(ITesteActions)" />
-        public void RemoveCallbacks(ITesteActions instance)
-        {
-            if (m_Wrapper.m_TesteActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        /// <summary>
-        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
-        /// </summary>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
-        /// </remarks>
-        /// <seealso cref="TesteActions.AddCallbacks(ITesteActions)" />
-        /// <seealso cref="TesteActions.RemoveCallbacks(ITesteActions)" />
-        /// <seealso cref="TesteActions.UnregisterCallbacks(ITesteActions)" />
-        public void SetCallbacks(ITesteActions instance)
-        {
-            foreach (var item in m_Wrapper.m_TesteActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_TesteActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    /// <summary>
-    /// Provides a new <see cref="TesteActions" /> instance referencing this action map.
-    /// </summary>
-    public TesteActions @Teste => new TesteActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Create" which allows adding and removing callbacks.
     /// </summary>
@@ -518,20 +390,5 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnVanish(InputAction.CallbackContext context);
-    }
-    /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Teste" which allows adding and removing callbacks.
-    /// </summary>
-    /// <seealso cref="TesteActions.AddCallbacks(ITesteActions)" />
-    /// <seealso cref="TesteActions.RemoveCallbacks(ITesteActions)" />
-    public interface ITesteActions
-    {
-        /// <summary>
-        /// Method invoked when associated input action "New action" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnNewaction(InputAction.CallbackContext context);
     }
 }
