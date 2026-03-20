@@ -108,6 +108,15 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Mod"",
+                    ""type"": ""Value"",
+                    ""id"": ""17831661-9b8e-4014-abff-a9a9a962c59b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -176,6 +185,39 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
                     ""action"": ""Pintura"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Line"",
+                    ""id"": ""9130ff09-c096-4914-b7d5-5ce141feac88"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mod"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""36dfd79e-6bf0-4dfc-844b-228eb12918e9"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mod"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""8602090c-28e0-4631-9d61-76da8c9c97e5"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mod"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -186,6 +228,7 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
         m_Create = asset.FindActionMap("Create", throwIfNotFound: true);
         m_Create_Pintura = m_Create.FindAction("Pintura", throwIfNotFound: true);
         m_Create_Vanish = m_Create.FindAction("Vanish", throwIfNotFound: true);
+        m_Create_Mod = m_Create.FindAction("Mod", throwIfNotFound: true);
     }
 
     ~@Controlers()
@@ -268,6 +311,7 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
     private List<ICreateActions> m_CreateActionsCallbackInterfaces = new List<ICreateActions>();
     private readonly InputAction m_Create_Pintura;
     private readonly InputAction m_Create_Vanish;
+    private readonly InputAction m_Create_Mod;
     /// <summary>
     /// Provides access to input actions defined in input action map "Create".
     /// </summary>
@@ -287,6 +331,10 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Create/Vanish".
         /// </summary>
         public InputAction @Vanish => m_Wrapper.m_Create_Vanish;
+        /// <summary>
+        /// Provides access to the underlying input action "Create/Mod".
+        /// </summary>
+        public InputAction @Mod => m_Wrapper.m_Create_Mod;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -319,6 +367,9 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
             @Vanish.started += instance.OnVanish;
             @Vanish.performed += instance.OnVanish;
             @Vanish.canceled += instance.OnVanish;
+            @Mod.started += instance.OnMod;
+            @Mod.performed += instance.OnMod;
+            @Mod.canceled += instance.OnMod;
         }
 
         /// <summary>
@@ -336,6 +387,9 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
             @Vanish.started -= instance.OnVanish;
             @Vanish.performed -= instance.OnVanish;
             @Vanish.canceled -= instance.OnVanish;
+            @Mod.started -= instance.OnMod;
+            @Mod.performed -= instance.OnMod;
+            @Mod.canceled -= instance.OnMod;
         }
 
         /// <summary>
@@ -390,5 +444,12 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnVanish(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Mod" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMod(InputAction.CallbackContext context);
     }
 }

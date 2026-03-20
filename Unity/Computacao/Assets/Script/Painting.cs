@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -17,7 +18,7 @@ public class Painting : MonoBehaviour
 
     public static Color colorPaint; 
 
-    private string name = $"textureMap_.ppm";
+    [SerializeField] string name = "tela.ppm";
 
     void Start()
     {
@@ -77,7 +78,7 @@ public class Painting : MonoBehaviour
         }
     }
 
-    public void Vanish(Vector2 pos)
+    void Vanish(Vector2 pos)
     {
         RaycastHit hit;
 
