@@ -11,6 +11,9 @@ public class HSValeu : MonoBehaviour
 
     void Start()
     {
+        sliderRed.value = 1;
+        sliderBlue.value = 1;
+        sliderGreen.value = 1;
     }
 
     public void OnRedChange()

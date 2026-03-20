@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Vanish",
+                    "type": "Value",
+                    "id": "6696d4a5-54b1-40fc-9f0a-46797258772b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -26,6 +35,39 @@
                     "action": "Pintura",
                     "isComposite": true,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "Vanish",
+                    "id": "0635ec5a-9585-4bb5-bf46-103bf4fe6c40",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Vanish",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "e2f9c11b-52ae-40e3-bf1c-0d5f77e14de8",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Vanish",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "941d2d39-c416-43f0-b62a-6e84c93f4be8",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Vanish",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "modifier",
@@ -48,6 +90,34 @@
                     "action": "Pintura",
                     "isComposite": false,
                     "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Teste",
+            "id": "a9a3ed05-297f-47b2-a4c7-65cd03ed1fdc",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "5c69c9f8-d472-4632-8da4-4957e2645ab3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "40ee608a-af5e-4593-905a-446813b994e9",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -4,13 +4,13 @@ using UnityEngine.InputSystem;
 
 public class Painting : MonoBehaviour
 {
-    private Texture2D tex;
+    public static Texture2D tex;
 
     private Renderer renderer;
 
     [SerializeField] Vector2 pos;
 
-    [SerializeField] int scaletexx, scaletexy;
+    public static int scaletexx, scaletexy;
 
     public static Color colorPaint;
 
@@ -28,7 +28,7 @@ public class Painting : MonoBehaviour
         {
             for (int j = 0; j < tex.height; j++)
             {
-                tex.SetPixel(i, j, Color.red);
+                tex.SetPixel(i, j, Color.gray);
             }
         }
 
@@ -39,10 +39,22 @@ public class Painting : MonoBehaviour
     {
     }
 
-    public void Paint(InputAction.CallbackContext value)
+    public void PantAndVanish(InputAction.CallbackContext value)
     {
         pos = value.ReadValue<Vector2>();
 
+        if(Mouse.current.leftButton.isPressed)
+        {
+            Paint(pos);
+        }
+        else if(Mouse.current.rightButton.isPressed)
+        {
+            Vanish(pos);
+        }
+    }
+
+    void Paint(Vector2 pos)
+    {
         RaycastHit hit;
 
         Ray ray;
@@ -55,6 +67,25 @@ public class Painting : MonoBehaviour
             float y = hit.textureCoord.y * scaletexy;
 
             tex.SetPixel((int)x, (int)y, colorPaint);
+
+            tex.Apply(false);
+        }
+    }
+
+    public void Vanish(Vector2 pos)
+    {
+        RaycastHit hit;
+
+        Ray ray;
+
+        ray = Camera.main.ScreenPointToRay(pos);
+
+        if(Physics.Raycast(ray, out hit))
+        {
+            float x = hit.textureCoord.x * scaletexx;
+            float y = hit.textureCoord.y * scaletexy;
+
+            tex.SetPixel((int)x, (int)y, Color.clear);
 
             tex.Apply(false);
         }
