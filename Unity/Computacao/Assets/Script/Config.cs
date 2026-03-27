@@ -41,6 +41,11 @@ public class Config : MonoBehaviour
         SceneManager.LoadScene(scene);
     }
 
+    public void Imp(string scene)
+    {
+        SceneManager.LoadScene(scene);
+    }
+
     public void Exit()
     {
         Application.Quit();

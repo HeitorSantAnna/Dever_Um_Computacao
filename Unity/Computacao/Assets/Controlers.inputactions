@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "FMod",
+                    "type": "Value",
+                    "id": "478ea690-22af-4ceb-b4dc-5ffbc788e594",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -102,8 +111,8 @@
                 },
                 {
                     "name": "Line",
-                    "id": "9130ff09-c096-4914-b7d5-5ce141feac88",
-                    "path": "OneModifier",
+                    "id": "610fd9f6-886d-431b-9ef6-01ced4500851",
+                    "path": "TwoModifiers",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -112,8 +121,8 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "modifier",
-                    "id": "36dfd79e-6bf0-4dfc-844b-228eb12918e9",
+                    "name": "modifier1",
+                    "id": "d94298b4-0df3-405f-8f5b-f9d7faf77388",
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
@@ -123,13 +132,57 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "modifier2",
+                    "id": "c52790c6-c702-4dbb-aaec-3f4699fbf44c",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mod",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "binding",
-                    "id": "8602090c-28e0-4631-9d61-76da8c9c97e5",
+                    "id": "601c12f1-e29b-4bc0-b3ff-be6d4da315e2",
                     "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Mod",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "8dc17c55-0509-4e34-88b1-f600651c1c78",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FMod",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "ac67f411-dc57-4e0d-9082-cfd4b92ee6d2",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FMod",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "db0b538c-a781-4e30-84a4-7b49da72216d",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FMod",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

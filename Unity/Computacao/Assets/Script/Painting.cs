@@ -1,10 +1,9 @@
 using System;
-using System.IO;
-using System.Text;
-using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class Painting : MonoBehaviour
 {
@@ -12,13 +11,19 @@ public class Painting : MonoBehaviour
 
     private Renderer renderer;
 
+    private bool line = false;
+
     [SerializeField] Vector2 pos;
 
     public static int scaletexx, scaletexy;
 
-    public static Color colorPaint; 
+    public static Color colorPaint;
 
-    [SerializeField] string name = "tela.ppm";
+    public static List<Color> colors = new List<Color>();
+
+    [SerializeField] GameObject game;
+
+    [SerializeField] Image image;
 
     void Start()
     {
@@ -41,21 +46,29 @@ public class Painting : MonoBehaviour
         tex.Apply(false);
     }
 
-    void Update()
-    {
-    }
-
     public void PantAndVanish(InputAction.CallbackContext value)
     {
         pos = value.ReadValue<Vector2>();
 
         if(Mouse.current.leftButton.isPressed)
         {
-            Paint(pos);
+            if (!line)
+            {
+                Paint(pos);
+            }
+            else if(line)
+            {
+                Line(pos);
+            }
         }
         else if(Mouse.current.rightButton.isPressed)
         {
             Vanish(pos);
+        }
+        else if(Keyboard.current.leftShiftKey.isPressed && Mouse.current.rightButton.isPressed)
+        {
+            PaintLine(pos);
+            line = true;
         }
     }
 
@@ -78,6 +91,48 @@ public class Painting : MonoBehaviour
         }
     }
 
+    void PaintLine(Vector2 pos)
+    {
+        RaycastHit hit;
+
+        //s[0] = pos;
+
+        Ray ray;
+
+        ray = Camera.main.ScreenPointToRay(pos);
+
+        if(Physics.Raycast(ray, out hit))
+        {
+            float x = hit.textureCoord.x * scaletexx;
+            float y = hit.textureCoord.y * scaletexy;
+
+            tex.SetPixel((int)x, (int)y, colorPaint);
+
+            tex.Apply(false);
+        }
+    }
+
+    void Line(Vector2 pos)
+    {
+        //s[1] = pos;
+
+        RaycastHit hit;
+
+        Ray ray;
+
+        ray = Camera.main.ScreenPointToRay(pos);
+
+        /*if (Physics.Linecast(s[0], s[1], out hit))
+        {
+            float x = hit.textureCoord.x * scaletexx;
+            float y = hit.textureCoord.y * scaletexy;
+
+            tex.SetPixel((int)x, (int)y, colorPaint);
+
+            tex.Apply(false);
+        }*/
+    }
+
     void Vanish(Vector2 pos)
     {
         RaycastHit hit;
@@ -97,36 +152,26 @@ public class Painting : MonoBehaviour
         }
     }
 
-    public void ExportPPM()
+    public void InfoColors()
     {
-        string caminho = Application.dataPath + "/" + name;
+        //Aqui é para pegar as cores
+        colors.Clear();
 
         int width = tex.width;
         int height = tex.height;
 
-        Color[] colors = tex.GetPixels();
-
-        string header = $"P3\n{width} {height}\n255\n";
-
-        using (StreamWriter writer = new StreamWriter(caminho))
+        for(int y = height - 1; y >= 0; y--)
         {
-            writer.Write(header);
-            
-            for(int y = height - 1; y >= 0; y--)
+            for (int x = 0; x < width; x++)
             {
-                for(int x = 0; x < width; x++)
+                Color c = tex.GetPixel(x, y);
+
+                if(!colors.Contains(c))
                 {
-                    Color c = tex.GetPixel(x, y);
-
-                    int r = Mathf.RoundToInt(c.r * 255);
-                    int g = Mathf.RoundToInt(c.g * 255);
-                    int b = Mathf.RoundToInt(c.b * 255);
-
-                    writer.WriteLine($"{r} {g} {b}");
+                    colors.Add(c);
                 }
             }
         }
-
-        Debug.Log($"Arquivo salvo em: {caminho}");
+        //Até aqui
     }
 }
