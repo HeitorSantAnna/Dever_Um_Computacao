@@ -102,7 +102,9 @@ public class Criar : MonoBehaviour
 
         using (StreamReader reader = new StreamReader(caminho))
         {
+            //Aqui vou precisar colocar o script para ler a imagem
 
+            //Até aqui
             for (int y = height - 1; y >= 0; y--)
             {
                 for (int x = 0; x < width; x++)
