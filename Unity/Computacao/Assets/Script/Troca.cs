@@ -1,9 +1,5 @@
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using DG.Tweening;
-using System.Linq;
 using UnityEngine.UI;
 
 public class Troca : MonoBehaviour
@@ -16,11 +12,11 @@ public class Troca : MonoBehaviour
 
     [SerializeField] Image image;
 
-    public static List<int> valor1 = new List<int>();
-    public static List<int> valor2 = new List<int>();
+    public static List<GameObject> valor1 = new List<GameObject>();
+    public static List<Color> valor2 = new List<Color>();
 
-    int mostrarO = 0;
-    int mostrarI = 0;
+    [SerializeField] int mostrarO = 0;
+    [SerializeField] int mostrarI = 0;
 
     private void Start()
     {
@@ -117,7 +113,7 @@ public class Troca : MonoBehaviour
 
     public void Submit()
     {
-        valor1.Add(mostrarO);
-        valor2.Add(mostrarI);
+        valor1.Add(ChangeOBJ[mostrarO]);
+        valor2.Add(ChangeImg[mostrarI]);
     }
 }

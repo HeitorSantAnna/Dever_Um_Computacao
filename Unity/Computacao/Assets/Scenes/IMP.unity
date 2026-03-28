@@ -1276,7 +1276,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95ed9b3a91fa2848a82aefe61b21e19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tela: {fileID: 0}
+  cor: []
+  gotroca:
+  - {fileID: 7199655433220590690, guid: a5e9af4bfbbd0ab4bae19fe7b0085ef3, type: 3}
+  - {fileID: 7184909181840056788, guid: 2e86668bc40795d4992a1c0077eaf8dd, type: 3}
+  - {fileID: 4376699431192239711, guid: f8dbbeb6bb73b0945a6a4478017fa217, type: 3}
+  - {fileID: 8487557167120696198, guid: 90d7dadb582bf664c9d748b7d01d8c84, type: 3}
+  valor1: 
+  valor2: 
+  tela: {fileID: 615390608}
+  alvo: {fileID: 615390610}
 --- !u!4 &2132993923
 Transform:
   m_ObjectHideFlags: 0
