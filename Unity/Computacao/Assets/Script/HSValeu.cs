@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class HSValeu : MonoBehaviour
 {
-    [SerializeField] Slider sliderRed, sliderBlue, sliderGreen, sliderAlpha;
-    [SerializeField] TMP_InputField textRed, textBlue, textGreen, textAlpha;
+    [SerializeField] Slider sliderRed, sliderBlue, sliderGreen;
+    [SerializeField] TMP_InputField textRed, textBlue, textGreen;
     [SerializeField] Image mostrarColor;
     private Color colorValue;
 
@@ -34,14 +34,9 @@ public class HSValeu : MonoBehaviour
         textGreen.text = sliderGreen.value.ToString("F2");
     }
 
-    public void OnAlphaChange()
-    {
-        textAlpha.text = sliderAlpha.value.ToString("F2");
-    }
-
     void FixedUpdate()
     {
-        colorValue = new Color(sliderRed.value, sliderBlue.value, sliderGreen.value, sliderAlpha.value);
+        colorValue = new Color(sliderRed.value, sliderBlue.value, sliderGreen.value);
 
         mostrarColor.color = colorValue;
 

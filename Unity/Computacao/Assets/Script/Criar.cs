@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class Criar : MonoBehaviour
 {
@@ -10,7 +13,13 @@ public class Criar : MonoBehaviour
 
     public int scaletexx, scaletexy;
 
+    private bool caracterE = false;
+
     [SerializeField] Texture2D tex;
+
+    [SerializeField] TMP_InputField nomeArquivo;
+
+    private char[] caracteresEsp = { '!', '@', '#', '$', '%', '¨', '&', '*', '(', ')', '`', '´', '{', '[', '^', '~', '}', ']', ':', ';', ',', '<', '.', '>', '/', '?' };
 
     [SerializeField] List<Color> cor = new List<Color>();
 
@@ -81,37 +90,66 @@ public class Criar : MonoBehaviour
 
     public void ExportPPM()
     {
-        string caminho = Application.dataPath + "/" + name;
-
-        int width = tex.width;
-        int height = tex.height;
-
-        string header = $"P3\n{width} {height}\n255\n";
-
-        using (StreamWriter writer = new StreamWriter(caminho))
+        if (nomeArquivo != null && !string.IsNullOrEmpty(nomeArquivo.text))
         {
-            writer.Write(header);
+            string verificador = nomeArquivo.text;
 
-            for (int y = height - 1; y >= 0; y--)
+            for (int i = 0; i < verificador.Length; i++)
             {
-                for (int x = 0; x < width; x++)
+                for (int j = 0; j < nomeArquivo.text.Length; j++)
                 {
-                    Color c = tex.GetPixel(x, y);
+                    if (verificador[i] == caracteresEsp[j])
+                    {
+                        Debug.Log("Tem caracter especial no nome do arquivo");
+                        caracterE = true;
+                    }
+                }
+            }
 
-                    int r = Mathf.RoundToInt(c.r * 255);
-                    int g = Mathf.RoundToInt(c.g * 255);
-                    int b = Mathf.RoundToInt(c.b * 255);
+            if (!caracterE)
+            {
+                name = nomeArquivo.text + ".ppm";
 
-                    //colorim[width, height] = c;
+                string caminho = Application.dataPath + "/" + "Image/" + name;
 
-                    writer.Write($"{r} {g} {b} ");
+                int width = tex.width;
+                int height = tex.height;
+
+                string header = $"P3\n{width} {height}\n255\n";
+
+                using (StreamWriter writer = new StreamWriter(caminho))
+                {
+                    writer.Write(header);
+
+                    for (int y = height - 1; y >= 0; y--)
+                    {
+                        for (int x = 0; x < width; x++)
+                        {
+                            Color c = tex.GetPixel(x, y);
+
+                            int r = Mathf.RoundToInt(c.r * 255);
+                            int g = Mathf.RoundToInt(c.g * 255);
+                            int b = Mathf.RoundToInt(c.b * 255);
+
+                            writer.Write($"{r} {g} {b} ");
+                        }
+
+                        writer.Write("\n");
+                    }
                 }
 
-                writer.Write("\n");
+                Debug.Log($"Arquivo salvo em: {caminho}");
+
+            }
+            else
+            {
+                Debug.Log("O arquivo não tem nome");
             }
         }
-
-        Debug.Log($"Arquivo salvo em: {caminho}");
+        else
+        {
+            Debug.Log("Não é possivel salvar o arquivo tem caracteres especias");
+        }
     }
 
     public void ImportarPPM()
