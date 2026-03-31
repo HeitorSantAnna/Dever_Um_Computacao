@@ -6,7 +6,7 @@ public class Troca : MonoBehaviour
 {
     [SerializeField] List<GameObject> ChangeOBJ = new List<GameObject>();
 
-    public static List<GameObject> envio = new List<GameObject>();
+    //public static List<GameObject> envio = new List<GameObject>();
 
     [SerializeField] List<Color> ChangeImg = new List<Color>();
 
@@ -25,10 +25,10 @@ public class Troca : MonoBehaviour
             ChangeImg.Add(Painting.colors[i]);
         }
 
-        for(int i = 0; i < ChangeOBJ.Count; i++)
+        /*for(int i = 0; i < ChangeOBJ.Count; i++)
         {
             envio.Add(ChangeOBJ[i]);
-        }
+        }*/
 
         for(int i = 0; i < ChangeOBJ.Count; i++)
         {
@@ -113,7 +113,10 @@ public class Troca : MonoBehaviour
 
     public void Submit()
     {
-        valor1.Add(ChangeOBJ[mostrarO]);
-        valor2.Add(ChangeImg[mostrarI]);
+        /*valor1.Add(ChangeOBJ[mostrarO]);
+        valor2.Add(ChangeImg[mostrarI]);*/
+
+        Criar.OBJtroca.Add(ChangeOBJ[mostrarO]);
+        Criar.Colortroca.Add(ChangeImg[mostrarI]);
     }
 }

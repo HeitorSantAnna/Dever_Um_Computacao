@@ -1,33 +1,24 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UI;
 
 public class Criar : MonoBehaviour
 {
-    private string name = "tela.ppm";
+    private string name = "Arte.ppm";
 
     public int scaletexx, scaletexy;
 
-    private bool caracterE = false;
-
     [SerializeField] Texture2D tex;
 
-    [SerializeField] TMP_InputField nomeArquivo;
+    //[SerializeField] List<Color> cor = new List<Color>();
 
-    private char[] caracteresEsp = { '!', '@', '#', '$', '%', '¨', '&', '*', '(', ')', '`', '´', '{', '[', '^', '~', '}', ']', ':', ';', ',', '<', '.', '>', '/', '?' };
+    public static List<GameObject> OBJtroca = new List<GameObject>();
 
-    [SerializeField] List<Color> cor = new List<Color>();
-
-    [SerializeField] List<GameObject> gotroca = new List<GameObject>();
+    //List<GameObject> OBJtroca = new List<GameObject>();
 
     [SerializeField] List<int> valor1 = new List<int>();
 
-    [SerializeField] List<Color> valor2 = new List<Color>();
+    public static List<Color> Colortroca = new List<Color>();
 
     [SerializeField] GameObject tela;
 
@@ -40,75 +31,19 @@ public class Criar : MonoBehaviour
         scaletexy = Painting.scaletexy;
 
         scaletexx = Painting.scaletexx;
-
-        /*for (int i = 0; i < Painting.colors.Count; i++)
-        {
-            cor.Add(Painting.colors[i]);
-        }
-
-        for (int i = 0; i < Troca.valor1.Count; i++)
-        {
-            valor1.Add(Troca.valor1[i]);
-        }
-
-        for (int i = 0; i < Troca.valor2.Count; i++)
-        {
-            valor2.Add(Troca.valor2[i]);
-
-            Debug.Log("Colocado 2");
-        }
-
-        for (int i = 0; i < Troca.valor1.Count; i++)
-        {
-            gotroca.Add(Troca.valor1[i]);
-        }*/
-        cor.AddRange(Painting.colors);
-        valor1.AddRange(Troca.valor1);
-        valor2.AddRange(Troca.valor2);
-        gotroca.AddRange(Troca.valor1);
-
-        for(int x = 0; x < cor.Count; x++)
-        {
-            Debug.Log($"{cor[x]}");
-        }
-
-        for (int x = 0; x < valor1.Count; x++)
-        {
-            Debug.Log($"{valor1[x]}");
-        }
-
-        for (int x = 0; x < valor2.Count; x++)
-        {
-            Debug.Log($"{valor2[x]}");
-        }
-
-        for (int x = 0; x < gotroca.Count; x++)
-        {
-            Debug.Log($"{gotroca[x]}");
-        }
     }
 
     public void ExportPPM()
     {
-        if (nomeArquivo != null && !string.IsNullOrEmpty(nomeArquivo.text))
+        for(int i = 0; i < OBJtroca.Count; i++)
         {
-            string verificador = nomeArquivo.text;
+            Debug.Log($"{OBJtroca[i]}");
+        }
 
-            for (int i = 0; i < verificador.Length; i++)
-            {
-                for (int j = 0; j < nomeArquivo.text.Length; j++)
-                {
-                    if (verificador[i] == caracteresEsp[j])
-                    {
-                        Debug.Log("Tem caracter especial no nome do arquivo");
-                        caracterE = true;
-                    }
-                }
-            }
-
-            if (!caracterE)
-            {
-                name = nomeArquivo.text + ".ppm";
+        for(int i = 0; i < Colortroca.Count; i++)
+        {
+            Debug.Log($"{Colortroca[i]}");
+        }
 
                 string caminho = Application.dataPath + "/" + "Image/" + name;
 
@@ -139,26 +74,15 @@ public class Criar : MonoBehaviour
                 }
 
                 Debug.Log($"Arquivo salvo em: {caminho}");
-
-            }
-            else
-            {
-                Debug.Log("O arquivo não tem nome");
-            }
-        }
-        else
-        {
-            Debug.Log("Não é possivel salvar o arquivo tem caracteres especias");
-        }
     }
 
     public void ImportarPPM()
     {
-        /*string caminho = Application.dataPath + "/" + name;
+        string caminho = Application.dataPath + "/Image/" + name;
 
-        if (!File.Exists(caminho))
+        if(!File.Exists(caminho))
         {
-            Debug.LogError("Arquivo não encontrado: " + caminho);
+            Debug.Log("NÃ£o foi possivel encontrar o arquivo");
             return;
         }
 
@@ -166,28 +90,36 @@ public class Criar : MonoBehaviour
         {
             string tipo = reader.ReadLine();
 
-            if (tipo != "P3")
+            if(tipo != "P3")
             {
-                Debug.LogError("Formato não suportado! Use P3.");
+                Debug.Log("Esse arquivo nÃ£o Ã© P3");
                 return;
             }
 
-            string linha = reader.ReadLine();
+            string line = reader.ReadLine();
 
-            while (linha.StartsWith("#"))
+            while(!string.IsNullOrEmpty(line) && line.StartsWith("#"))
             {
-                linha = reader.ReadLine();
+                line = reader.ReadLine();
             }
 
-            string[] dim = linha.Split(' ');
+            string[] dim = line.Split(" ");
             int largura = int.Parse(dim[0]);
             int altura = int.Parse(dim[1]);
 
-            int max = int.Parse(reader.ReadLine());
+            int maxVal = int.Parse(reader.ReadLine());
+
+            Texture2D texture = new Texture2D(largura, altura);
+
+            texture.filterMode = FilterMode.Point;
+
+            alvo = tela.GetComponent<Renderer>();
+
+            alvo.material.mainTexture = texture;
 
             List<int> valores = new List<int>();
 
-            while (!reader.EndOfStream)
+            while(!reader.EndOfStream)
             {
                 string linhaPixels = reader.ReadLine();
                 string[] partes = linhaPixels.Split(' ');
@@ -203,241 +135,70 @@ public class Criar : MonoBehaviour
 
             List<Color> pixels = new List<Color>();
 
-            for (int i = 0; i < valores.Count; i += 3)
+            for(int i = 0; i <= valores.Count - 3; i+= 3)
             {
                 int r = valores[i];
-                int g = valores[i + 1];
+                int g = valores[1 + i];
                 int b = valores[i + 2];
 
                 pixels.Add(new Color(r / 255f, g / 255f, b / 255f));
             }
 
-            if (pixels.Count < largura * altura)
-            {
-                Debug.LogError("Imagem PPM incompleta!");
-                return;
-            }
-
-            Texture2D tex = new Texture2D(largura, altura);
-
-            tex.filterMode = FilterMode.Point;
+            int width = texture.width;
+            int height = texture.height;
 
             int index = 0;
 
-            for (int y = altura - 1; y >= 0; y--)
+            for(int y = height - 1; y >= 0; y--)
             {
-                for (int x = 0; x < largura; x++)
+                for(int x = 0; x < width; x++)
                 {
-                    tex.SetPixel(x, y, pixels[index]);
+                    texture.SetPixel(x, y, pixels[index]);
                     index++;
                 }
             }
 
-            tex.Apply();
+            texture.Apply(false);
 
-            if (alvo != null)
+            //Apartir daqui serve para instanciar os objetos
+
+            for(int i = 0; i < OBJtroca.Count; i++)
             {
-                alvo.material.mainTexture = tex;
+                OBJtroca[i].SetActive(true);
             }
 
-            Debug.Log("PPM carregado corretamente!");
-        }
-
-        //Aqui vai substituir as cores por objetos
-        int xt = tex.width, yt = tex.height;
-
-        for(int u = yt - 1; u >= 0; u--)
-        {
-            for(int v = 0; v < xt; v++)
+            for(int y = 0; y < height; y++)
             {
-                Color c = tex.GetPixel(u, v);
-
-                if (cor.Contains(c))
+                for(int x = 0; x < width; x++)
                 {
-                    //Pegar a cor, depois pegar o indice da cor
-                    int index = valor2.IndexOf(c);
+                    Color c = texture.GetPixel(x, y);
 
-                    Vector3 pos = new Vector3(u, 0, v);
+                    float tamanhoplano = 10;
 
-                    Instantiate(gotroca[index], pos, Quaternion.identity);
-                }
-            }
-        }
+                    float u = (float)x / width;
+                    float v = (float)y / height;
 
-        tela.SetActive(false);
+                    float posX = -(u - 0.5f) * tamanhoplano;
+                    float posY = -(v - 0.5f) * tamanhoplano;
 
-        int xt = tex.width;
-        int yt = tex.height;
+                    Vector3 localpos = new Vector3(posX, 0, posY);
+                    Vector3 localWorld = tela.transform.TransformPoint(localpos);
 
-        bool CorIgual(Color a, Color b)
-        {
-            return Mathf.Abs(a.r - b.r) < 0.01f &&
-                   Mathf.Abs(a.g - b.g) < 0.01f &&
-                   Mathf.Abs(a.b - b.b) < 0.01f;
-        }
-
-        for (int u = yt - 1; u >= 0; u--)
-        {
-            for (int v = 0; v < xt; v++)
-            {
-                Color c = tex.GetPixel(v, u);
-
-                for (int i = 0; i < cor.Count; i++)
-                {
-                    if (CorIgual(cor[i], c))
+                    if(Colortroca.Contains(c))
                     {
-                        int inde = valor2.IndexOf(cor[i]);
-                        if (inde == -1) continue;
+                        int indexs = Colortroca.IndexOf(c);
 
-                        int index = valor1[inde];
+                        GameObject obj = Instantiate(OBJtroca[indexs], localWorld, Quaternion.identity);
 
-                        float uNorm = v / (float)xt;
-                        float vNorm = u / (float)yt;
+                        float escalax = tamanhoplano / texture.width;
+                        float escalaz = tamanhoplano / texture.height;
 
-                        Vector3 size = tela.GetComponent<Renderer>().bounds.size;
-
-                        Vector3 local = new Vector3((uNorm - 0.5f) * size.x, 0, (vNorm - 0.5f) * size.z);
-
-                        Vector3 worldPos = tela.transform.TransformPoint(local);
-
-                        Instantiate(gotroca[index], worldPos, Quaternion.identity);
+                        obj.transform.localScale = new Vector3(escalax, escalax, escalaz * -1);
                     }
                 }
             }
-        }*/
 
-        cor.AddRange(Painting.colors);
-        valor1.AddRange(Troca.valor1);
-        valor2.AddRange(Troca.valor2);
-        gotroca.AddRange(Troca.valor1);
-
-        string caminho = Application.dataPath + "/" + name;
-
-        if (!File.Exists(caminho))
-        {
-            Debug.LogError("Arquivo não encontrado: " + caminho);
-            return;
-        }
-
-        using (StreamReader reader = new StreamReader(caminho))
-        {
-            string tipo = reader.ReadLine();
-
-            if (tipo != "P3")
-            {
-                Debug.LogError("Formato não suportado! Use P3.");
-                return;
-            }
-
-            string linha = reader.ReadLine();
-
-            while (linha.StartsWith("#"))
-                linha = reader.ReadLine();
-
-            string[] dim = linha.Split(' ');
-            int largura = int.Parse(dim[0]);
-            int altura = int.Parse(dim[1]);
-
-            reader.ReadLine(); // max value
-
-            List<int> valores = new List<int>();
-
-            while (!reader.EndOfStream)
-            {
-                string linhaPixels = reader.ReadLine();
-                string[] partes = linhaPixels.Split(' ');
-
-                foreach (string p in partes)
-                {
-                    if (!string.IsNullOrWhiteSpace(p))
-                        valores.Add(int.Parse(p));
-                }
-            }
-
-            List<Color> pixels = new List<Color>();
-
-            for (int i = 0; i < valores.Count; i += 3)
-            {
-                pixels.Add(new Color(
-                    valores[i] / 255f,
-                    valores[i + 1] / 255f,
-                    valores[i + 2] / 255f
-                ));
-            }
-
-            if (pixels.Count < largura * altura)
-            {
-                Debug.LogError("Imagem PPM incompleta!");
-                return;
-            }
-
-            // ? CORREÇÃO: usar variável da classe
-            tex = new Texture2D(largura, altura);
-            tex.filterMode = FilterMode.Point;
-
-            int index = 0;
-
-            for (int y = altura - 1; y >= 0; y--)
-            {
-                for (int x = 0; x < largura; x++)
-                {
-                    tex.SetPixel(x, y, pixels[index]);
-                    index++;
-                }
-            }
-
-            tex.Apply();
-
-            if (alvo != null)
-                alvo.material.mainTexture = tex;
-        }
-
-        // ===== GERAR OBJETOS =====
-        int xt = tex.width;
-        int yt = tex.height;
-
-        for (int u = yt - 1; u >= 0; u--)
-        {
-            for (int v = 0; v < xt; v++)
-            {
-                Color c = tex.GetPixel(v, u);
-
-                for (int i = 0; i < cor.Count; i++)
-                {
-                    if (CorIgual(cor[i], c))
-                    {
-                        int inde = valor2.IndexOf(cor[i]);
-                        if (inde == -1) continue;
-
-                        if (inde >= valor1.Count || inde >= gotroca.Count) continue;
-
-                        int prefabIndex = valor1[inde];
-
-                        float uNorm = v / (float)xt;
-                        float vNorm = u / (float)yt;
-
-                        Vector3 size = tela.GetComponent<Renderer>().bounds.size;
-
-                        Vector3 local = new Vector3(
-                            (uNorm - 0.5f) * size.x,
-                            0,
-                            (vNorm - 0.5f) * size.z
-                        );
-
-                        Vector3 worldPos = tela.transform.TransformPoint(local);
-
-                        Instantiate(gotroca[prefabIndex], worldPos, Quaternion.identity);
-                    }
-                }
-            }
-        }
-
-        tela.SetActive(false);
-        bool CorIgual(Color a, Color b)
-        {
-            return Mathf.Abs(a.r - b.r) < 0.01f &&
-                   Mathf.Abs(a.g - b.g) < 0.01f &&
-                   Mathf.Abs(a.b - b.b) < 0.01f;
+            tela.SetActive(false);
         }
     }
 }

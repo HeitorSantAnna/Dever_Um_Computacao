@@ -39,7 +39,7 @@ public class Painting : MonoBehaviour
         {
             for (int j = 0; j < tex.height; j++)
             {
-                tex.SetPixel(i, j, Color.gray);
+                tex.SetPixel(i, j, Color.clear);
             }
         }
 
@@ -154,7 +154,7 @@ public class Painting : MonoBehaviour
 
     public void InfoColors()
     {
-        //Aqui é para pegar as cores
+        //Aqui ï¿½ para pegar as cores
         colors.Clear();
 
         int width = tex.width;
@@ -172,6 +172,6 @@ public class Painting : MonoBehaviour
                 }
             }
         }
-        //Até aqui
+        //Atï¿½ aqui
     }
 }
