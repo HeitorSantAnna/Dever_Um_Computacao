@@ -36,7 +36,7 @@ public class HSValeu : MonoBehaviour
 
     void FixedUpdate()
     {
-        colorValue = new Color(sliderRed.value, sliderBlue.value, sliderGreen.value);
+        colorValue = new Color(sliderRed.value, sliderGreen.value, sliderBlue.value);
 
         mostrarColor.color = colorValue;
 

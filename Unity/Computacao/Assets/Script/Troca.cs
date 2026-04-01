@@ -6,8 +6,6 @@ public class Troca : MonoBehaviour
 {
     [SerializeField] List<GameObject> ChangeOBJ = new List<GameObject>();
 
-    //public static List<GameObject> envio = new List<GameObject>();
-
     [SerializeField] List<Color> ChangeImg = new List<Color>();
 
     [SerializeField] Image image;
@@ -22,13 +20,11 @@ public class Troca : MonoBehaviour
     {
         for(int i = 0; i < Painting.colors.Count; i++)
         {
-            ChangeImg.Add(Painting.colors[i]);
+            if (Painting.colors[i].a == 1)
+            {
+                ChangeImg.Add(Painting.colors[i]);
+            }
         }
-
-        /*for(int i = 0; i < ChangeOBJ.Count; i++)
-        {
-            envio.Add(ChangeOBJ[i]);
-        }*/
 
         for(int i = 0; i < ChangeOBJ.Count; i++)
         {
