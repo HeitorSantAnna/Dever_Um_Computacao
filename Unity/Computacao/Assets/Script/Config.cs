@@ -15,13 +15,6 @@ public class Config : MonoBehaviour
         
     }
 
-    void Update()
-    {
-        scalex = int.Parse(txtscalex.text);
-
-        scaley = int.Parse(txtscaley.text);
-    }
-
     public void Play(string scene)
     {
         if (scalex == 0 || scaley == 0)
@@ -30,8 +23,8 @@ public class Config : MonoBehaviour
         }
         else
         {
-            Painting.scaletexy = scaley;
-            Painting.scaletexx = scalex;
+            Painting.scaletexy = int.Parse(txtscaley.text);
+            Painting.scaletexx = int.Parse(txtscalex.text);
             SceneManager.LoadScene(scene);
         }
     }

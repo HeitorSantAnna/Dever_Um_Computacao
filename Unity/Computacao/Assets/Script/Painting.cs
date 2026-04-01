@@ -11,7 +11,9 @@ public class Painting : MonoBehaviour
 
     private Renderer renderer;
 
-    private bool line = false;
+    [SerializeField] bool line = false, po = false;
+
+    [SerializeField] Vector2 posline = new Vector2();
 
     [SerializeField] Vector2 pos;
 
@@ -50,7 +52,12 @@ public class Painting : MonoBehaviour
     {
         pos = value.ReadValue<Vector2>();
 
-        if(Mouse.current.leftButton.isPressed)
+        if (Keyboard.current.leftShiftKey.isPressed && Mouse.current.leftButton.isPressed)
+        {
+            PaintLine(pos);
+            line = true;
+        }
+        else if (Mouse.current.leftButton.isPressed)
         {
             if (!line)
             {
@@ -58,17 +65,13 @@ public class Painting : MonoBehaviour
             }
             else if(line)
             {
-                Line(pos);
+                po = true;
+                PaintLine(pos);
             }
         }
         else if(Mouse.current.rightButton.isPressed)
         {
             Vanish(pos);
-        }
-        else if(Keyboard.current.leftShiftKey.isPressed && Mouse.current.rightButton.isPressed)
-        {
-            PaintLine(pos);
-            line = true;
         }
     }
 
@@ -93,44 +96,60 @@ public class Painting : MonoBehaviour
 
     void PaintLine(Vector2 pos)
     {
-        RaycastHit hit;
-
-        //s[0] = pos;
-
-        Ray ray;
-
-        ray = Camera.main.ScreenPointToRay(pos);
-
-        if(Physics.Raycast(ray, out hit))
+        if (po == false)
         {
-            float x = hit.textureCoord.x * scaletexx;
-            float y = hit.textureCoord.y * scaletexy;
+            posline = pos;
 
-            tex.SetPixel((int)x, (int)y, colorPaint);
+            RaycastHit hit;
 
-            tex.Apply(false);
+            Ray ray;
+
+            ray = Camera.main.ScreenPointToRay(posline);
+
+            if(Physics.Raycast(ray, out hit))
+            {
+                posline.x = hit.textureCoord.x * scaletexx;
+                posline.y = hit.textureCoord.y * scaletexy;
+
+                tex.SetPixel((int)posline.x, (int)posline.y, colorPaint);
+
+                tex.Apply(false);
+            }
+            //.text = $"O proximo clique criará uma linha";
         }
-    }
-
-    void Line(Vector2 pos)
-    {
-        //s[1] = pos;
-
-        RaycastHit hit;
-
-        Ray ray;
-
-        ray = Camera.main.ScreenPointToRay(pos);
-
-        /*if (Physics.Linecast(s[0], s[1], out hit))
+        else if(po == true)
         {
-            float x = hit.textureCoord.x * scaletexx;
-            float y = hit.textureCoord.y * scaletexy;
+            RaycastHit hit;
 
-            tex.SetPixel((int)x, (int)y, colorPaint);
+            Ray ray;
 
-            tex.Apply(false);
-        }*/
+            ray = Camera.main.ScreenPointToRay(pos);
+
+            if(Physics.Raycast(ray, out hit))
+            {
+                Vector2 Texhit = hit.textureCoord;
+                Texhit.x *= scaletexx;
+                Texhit.y *= scaletexy;
+
+                float distance = Vector2.Distance(posline, Texhit);
+
+                for (int i = 0; i < distance; i++)
+                {
+                    float t = i / distance;
+
+                    float x = Mathf.Lerp(posline.x, Texhit.x, t);
+                    float y = Mathf.Lerp(posline.y, Texhit.y, t);
+
+                    tex.SetPixel((int)x, (int)y, colorPaint);
+                }
+
+                tex.Apply(false);
+                line = false;
+                po = false;
+            }
+        }
+
+        Debug.Log(po);
     }
 
     void Vanish(Vector2 pos)

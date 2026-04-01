@@ -4215,13 +4215,21 @@ MonoBehaviour:
     m_ActionId: 6696d4a5-54b1-40fc-9f0a-46797258772b
     m_ActionName: 'Create/Vanish[/Mouse/rightButton,/Mouse/position]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 775789977}
+        m_TargetAssemblyTypeName: Painting, Assembly-CSharp
+        m_MethodName: PantAndVanish
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 17831661-9b8e-4014-abff-a9a9a962c59b
     m_ActionName: 'Create/Mod[/Keyboard/leftShift,/Mouse/position]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 478ea690-22af-4ceb-b4dc-5ffbc788e594
-    m_ActionName: 'Create/FMod[/Mouse/leftButton,/Mouse/position]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Create

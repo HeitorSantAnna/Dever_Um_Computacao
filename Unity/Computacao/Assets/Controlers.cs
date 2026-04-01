@@ -117,15 +117,6 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""FMod"",
-                    ""type"": ""Value"",
-                    ""id"": ""478ea690-22af-4ceb-b4dc-5ffbc788e594"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -238,39 +229,6 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
                     ""action"": ""Mod"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""One Modifier"",
-                    ""id"": ""8dc17c55-0509-4e34-88b1-f600651c1c78"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""FMod"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""ac67f411-dc57-4e0d-9082-cfd4b92ee6d2"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""FMod"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""db0b538c-a781-4e30-84a4-7b49da72216d"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""FMod"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -282,7 +240,6 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
         m_Create_Pintura = m_Create.FindAction("Pintura", throwIfNotFound: true);
         m_Create_Vanish = m_Create.FindAction("Vanish", throwIfNotFound: true);
         m_Create_Mod = m_Create.FindAction("Mod", throwIfNotFound: true);
-        m_Create_FMod = m_Create.FindAction("FMod", throwIfNotFound: true);
     }
 
     ~@Controlers()
@@ -366,7 +323,6 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
     private readonly InputAction m_Create_Pintura;
     private readonly InputAction m_Create_Vanish;
     private readonly InputAction m_Create_Mod;
-    private readonly InputAction m_Create_FMod;
     /// <summary>
     /// Provides access to input actions defined in input action map "Create".
     /// </summary>
@@ -390,10 +346,6 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Create/Mod".
         /// </summary>
         public InputAction @Mod => m_Wrapper.m_Create_Mod;
-        /// <summary>
-        /// Provides access to the underlying input action "Create/FMod".
-        /// </summary>
-        public InputAction @FMod => m_Wrapper.m_Create_FMod;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -429,9 +381,6 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
             @Mod.started += instance.OnMod;
             @Mod.performed += instance.OnMod;
             @Mod.canceled += instance.OnMod;
-            @FMod.started += instance.OnFMod;
-            @FMod.performed += instance.OnFMod;
-            @FMod.canceled += instance.OnFMod;
         }
 
         /// <summary>
@@ -452,9 +401,6 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
             @Mod.started -= instance.OnMod;
             @Mod.performed -= instance.OnMod;
             @Mod.canceled -= instance.OnMod;
-            @FMod.started -= instance.OnFMod;
-            @FMod.performed -= instance.OnFMod;
-            @FMod.canceled -= instance.OnFMod;
         }
 
         /// <summary>
@@ -516,12 +462,5 @@ public partial class @Controlers: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMod(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "FMod" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnFMod(InputAction.CallbackContext context);
     }
 }
