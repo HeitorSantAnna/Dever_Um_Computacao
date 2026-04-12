@@ -18,19 +18,16 @@ public class HSValeu : MonoBehaviour
 
     public void OnRedChange()
     {
-        //Aqui muda o valor do Hue;
         textRed.text = sliderRed.value.ToString("F2");
     }
 
     public void OnBlueChange()
     {
-        //Aqui altera o valor da Saturacao
         textBlue.text = sliderBlue.value.ToString("F2");
     }
 
     public void OnGreenChange()
     {
-        //Aqui altera o valor do Value
         textGreen.text = sliderGreen.value.ToString("F2");
     }
 

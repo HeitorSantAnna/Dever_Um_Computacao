@@ -10,9 +10,6 @@ public class Troca : MonoBehaviour
 
     [SerializeField] Image image;
 
-    public static List<GameObject> valor1 = new List<GameObject>();
-    public static List<Color> valor2 = new List<Color>();
-
     [SerializeField] int mostrarO = 0;
     [SerializeField] int mostrarI = 0;
 
@@ -109,9 +106,6 @@ public class Troca : MonoBehaviour
 
     public void Submit()
     {
-        /*valor1.Add(ChangeOBJ[mostrarO]);
-        valor2.Add(ChangeImg[mostrarI]);*/
-
         Criar.OBJtroca.Add(ChangeOBJ[mostrarO]);
         Criar.Colortroca.Add(ChangeImg[mostrarI]);
     }

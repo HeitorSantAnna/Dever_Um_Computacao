@@ -115,7 +115,6 @@ public class Painting : MonoBehaviour
 
                 tex.Apply(false);
             }
-            //.text = $"O proximo clique criará uma linha";
         }
         else if(po == true)
         {
@@ -173,7 +172,6 @@ public class Painting : MonoBehaviour
 
     public void InfoColors()
     {
-        //Aqui � para pegar as cores
         colors.Clear();
 
         int width = tex.width;
@@ -191,6 +189,5 @@ public class Painting : MonoBehaviour
                 }
             }
         }
-        //At� aqui
     }
 }

@@ -10,11 +10,7 @@ public class Criar : MonoBehaviour
 
     [SerializeField] Texture2D tex;
 
-    //[SerializeField] List<Color> cor = new List<Color>();
-
     public static List<GameObject> OBJtroca = new List<GameObject>();
-
-    //List<GameObject> OBJtroca = new List<GameObject>();
 
     [SerializeField] List<int> valor1 = new List<int>();
 
@@ -35,16 +31,6 @@ public class Criar : MonoBehaviour
 
     public void ExportPPM()
     {
-        for(int i = 0; i < OBJtroca.Count; i++)
-        {
-            Debug.Log($"{OBJtroca[i]}");
-        }
-
-        for(int i = 0; i < Colortroca.Count; i++)
-        {
-            Debug.Log($"{Colortroca[i]}");
-        }
-
                 string caminho = Application.dataPath + "/" + "Image/" + name;
 
                 int width = tex.width;
